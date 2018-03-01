@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用来做一些随时会被删的例子</title>
+	<script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="t-1">
+		<span>{{a}}</span>
+	</div>
+    
+</body>
+     <script type="text/javascript">
+     	
+     	var data = {a:1,
+     	           newTodoText:'',
+     	           visitCount:0,
+     	           hideCompletedTodos:false,
+     	           todos:[],
+     	           error:null};
+
+     	var vm = new Vue({
+     		el:'#t-1',
+     		data:data
+     	})
+        
+     	console.log(vm.a === data.a)
+       
+     </script>
+</html>
