@@ -20,12 +20,52 @@
      	           todos:[],
      	           error:null};
 
-     	var vm = new Vue({
-     		el:'#t-1',
-     		data:data
-     	})
+     	// var vm = new Vue({
+     	// 	el:'#t-1',
+     	// 	data:data
+     	// })
         
-     	console.log(vm.a === data.a)
-       
+     	// console.log(vm.a === data.a)
+        
+
+        //实例被创建之后执行的代码
+        //mounted updated destroyed  钩子
+        var vm = new Vue({ 
+        	el:'#t-1',
+        	data:{
+        		a:1
+        	}, 
+        	beforeCreate:function(){//创建前
+        		console.log('beforecreate a');
+        	},
+        	created:function(){//创建之后
+        		console.log('a is:' + this.a);
+        	},
+        	beforeMount:function(){//挂载前
+        		console.log('brforeMount a');
+        	},
+        	mounted:function(){//安装之后（挂载之后）  
+        		console.log('mounted a');
+        	}, 
+        	beforeUpdate:function(){//更新前（更新之前的钩子）
+        		console.log('beforeUpdate a');
+        	},
+        	updated:function(){//更新之后
+        		console.log('update a');
+        	},
+        	beforeDestroy:function(){//卸载前（拆除数据监听，子组件，事件监听）
+        		console.log('beforeDestroy a');
+        	},
+        	destroyed:function(){//卸载之后
+        		console.log('destroyed a');
+        	}
+        });
+
+
+
+
+
+
+
      </script>
 </html>

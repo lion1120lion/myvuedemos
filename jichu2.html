@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Class与Style绑定</title>
+	<script type="text/javascript" src="https://unpkg.com/vue"></script>
+	<style type="text/css">
+		.active{
+			height:10px;
+			width: 10px;
+			border:1px solid red;
+		}
+		.text-danger{
+			margin-left:100px;
+		}
+	</style> 
+</head>
+<body>
+	 <div id="app-1">
+    	   <div class="static" v-bind:class="{active:isActive,'text-danger':hasError}"></div>
+	 </div>
+    <br/>
+
+    <span>绑定数据对象不必内联定义在模板里</span>
+    <div id="app-2" v-bind:class="classObject"></div>
+    <br/>
+
+
+    <span>数组语法</span>
+    <div id="app-3" v-bind:class="[activeClass,errorClass]"></div>
+    <div id="app-4" v-bind:class="[isActive ? active : '',errorClass]">条件切换列表中的 class,三元表达式</div>
+    <div id="app-5" v-bind:class="[{active:isActive},errorClass]">多个条件写会繁琐，可使用对象语法</div>
+
+</body>
+       <script>
+       		var vm = new Vue({
+       			el:'#app-1',
+       			data:{
+       				isActive:true,
+       				hasError:false
+       			}
+       		})
+
+       		var vm2 = new Vue({
+       			el:'#app-2',
+       			data:{ 
+       				isActive:true,
+       				error:null 
+       			},
+       			computed:{
+       				classObject:function(){
+       					return {
+       						active:this.isActive && !this.error,
+       						'text-danger':this.error && this.error.typeof === 'fatal'  
+       					} 
+       				}
+       			}
+       		});
+
+       		var vm3 = new Vue({
+       			el:'#app-3',
+       			data:{activeClass:'active',errorClass:'text-danger'}
+       		});
+       		var vm4 = new Vue({
+       			el:'#app-4', 
+       			data:{isActive:true,errorClass:'text-danger'}
+       		});
+       		var vm5 = new Vue({
+       			el:'#app-5',
+       			data:{isActive:true,errorClass:'text-danger'}
+       		})
+       </script> 
+</html>

@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html>
-<head> 
-	<meta charset="utf-8">
-	<title>v-bind操作</title>
-	<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<head>
+	 <meta charset="utf-8">
+     <title>侦听器--基本例子</title>
 </head>
 <body>
-     <div id="app-2"> 
-     	<span v-bind:title="message">
-     		鼠标悬停几秒钟查看此处动态绑定的提示信息
-     	</span>
+     <div id="watch-example">
+          <p>Ask a yes/no question:
+               <input v-model="question">
+          </p>
+          <p>{{answer}}</p>
      </div>
-     <script type="text/javascript">
-     	var app2 = new Vue({
-     		el:'#app-2',
-     		data:{
-     			message:'页面加载于' + new Date().toLocaleString()
-     		}
-     	}) 
-     </script>
-</body>
+</body> 
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+<script>
+	var watchExampleVM = new Vue({
+		el:'#watch-example',
+		data:{
+			question:'',
+			answer:'I cannot give you an answer until you ask a question!'
+		},  
+		watch:{   
+			question:function(newQuestion,oldQuestion){
+				this.answer = 'Waiting for you to stop typing...';
+				this.getAnswer();//watch选项允许执行异步操作，限制执行频率（例子:不允许快速点击两次提交），设置中间态。除了watch,还可以用命令式的vm.$watch API
+			}
+		}, 
+		methods:{
+			getAnswer:_.debounce(//debounce去抖
+				function(){
+					console.log(this.question.indexOf('?'));
+					if(this.question.indexOf('?')===-1){
+						this.answer = 'Questions usually contain a question mark.;';
+						return;
+					}
+					this.answer = 'Thinking...';
+					var vm = this;
+					axios.get('https://yesno.wtf/api').then(function(response){
+						vm.answer = _.capitalize(response.data.answer);//capitalize利用
+					}).catch(function(error){
+						vm.answer = 'Error!Could not reach the API.'+error;
+					});
+				},500)
+		}
+	}) 
+</script>
 </html>

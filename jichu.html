@@ -31,7 +31,7 @@
      <br/>
 
      <span>侦听属性</span>
-     <div id="demo">
+     <div id="demo">  
           {{fullName}}
      </div>
      <br/>
@@ -54,7 +54,7 @@
                     lastName:'Bar',
                     fullName:'Foo Bar'
                },
-               watch:{
+               watch:{//侦听
                     firstName:function(val){
                          this.fullName=val+' '+this.lastName
                     },
@@ -69,7 +69,7 @@
                     firstName:'Foo',
                     lastName:'Bar'
                },
-               computed:{
+               computed:{//计算属性
                     fullName:{
                          get:function(){
                          return this.firstName+ ' '+ this.lastName;
